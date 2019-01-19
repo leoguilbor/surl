@@ -19,12 +19,16 @@ package br.com.leoguilbor.surl.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import br.com.leoguilbor.surl.domain.ShortUrl;
 
 public class ShortUrlDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Field cannot stay empty")
 	private String url;
+	@NotEmpty(message="Field cannot stay empty")
 	private String uid;
 	public ShortUrlDTO() {}
 	

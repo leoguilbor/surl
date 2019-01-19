@@ -23,15 +23,14 @@ import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import br.com.leoguilbor.surl.domain.ShortUrl;
 
 public class NewShortUrlDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	@NotEmpty(message="Field cannot stay empty")
 	private String url;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdAt;
 
 	public NewShortUrlDTO() {
 	}
@@ -39,7 +38,6 @@ public class NewShortUrlDTO implements Serializable {
 	public NewShortUrlDTO(ShortUrl surl) {
 		super();
 		this.url = surl.getUrl();
-		this.createdAt = Calendar.getInstance().getTime();
 	}
 
 	public String getUrl() {
@@ -50,7 +48,4 @@ public class NewShortUrlDTO implements Serializable {
 		this.url = url;
 	}
 
-	public ShortUrl ToObject() {
-		return new ShortUrl(null, this.url, null, this.createdAt,null);
-	}
 }

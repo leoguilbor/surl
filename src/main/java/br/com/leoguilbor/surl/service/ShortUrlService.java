@@ -1,5 +1,6 @@
 package br.com.leoguilbor.surl.service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.leoguilbor.surl.config.AppConfigParameter;
 import br.com.leoguilbor.surl.domain.ShortUrl;
+import br.com.leoguilbor.surl.dto.NewShortUrlDTO;
+import br.com.leoguilbor.surl.dto.ShortUrlDTO;
 import br.com.leoguilbor.surl.exception.ObjectNotFoundException;
 import br.com.leoguilbor.surl.exception.UrlNotShortedException;
 import br.com.leoguilbor.surl.repository.ShortUrlRepository;
@@ -18,10 +21,9 @@ import br.com.leoguilbor.surl.repository.ShortUrlRepository;
 @Service
 public class ShortUrlService {
 
-
 	@Autowired
 	private AppConfigParameter params;
-	
+
 	@Autowired
 	private ShortUrlRepository rep;
 
@@ -32,19 +34,28 @@ public class ShortUrlService {
 	}
 
 	@Transactional
-	public ShortUrl insert(ShortUrl surl) {
+	public ShortUrl insert(NewShortUrlDTO newShortUrlDTO) {
 
-		surl.setId(null);
+		ShortUrl newSurl;
 		String shortUid;
+		
+		try {
+			newSurl = this.findByUrl(newShortUrlDTO.getUrl());
+		} catch (UrlNotShortedException e) {
+			newSurl = this.fromDTO(newShortUrlDTO);
+			newSurl.setId(null);
 
-		do {
-			
-			shortUid = RandomStringUtils.random(params.getUID_LENGTH(), params.getUID_CHARS());
-			
-		}while (shortUrlExist(shortUid));
+			do {
 
-		surl.setUid(shortUid);
-		return rep.save(surl);
+				shortUid = RandomStringUtils.random(params.getUID_LENGTH(), params.getUID_CHARS());
+
+			} while (shortUrlExist(shortUid));
+
+			newSurl.setCreatedAt(Calendar.getInstance().getTime());
+			newSurl.setUid(shortUid);
+			return rep.save(newSurl);
+		}
+		return newSurl;
 	}
 
 	private Boolean shortUrlExist(String shortUid) {
@@ -81,5 +92,12 @@ public class ShortUrlService {
 	public String getPrefix() {
 		return this.params.getPrefix();
 	}
-
+	
+	public ShortUrl fromDTO(NewShortUrlDTO dto) {
+		return new ShortUrl(null, dto.getUrl(), null, null,null);
+	}
+	
+	public ShortUrl fromDTO(ShortUrlDTO dto) {
+		return new ShortUrl(null, dto.getUrl(), dto.getUid(),null,null);
+	}
 }

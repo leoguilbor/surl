@@ -30,15 +30,10 @@ public class ShortUrlResource {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> insert(@RequestBody NewShortUrlDTO newShortUrlDTO) {
-		ShortUrl newSurl;
-		try {
-			newSurl = service.findByUrl(newShortUrlDTO.getUrl());
-		} catch (UrlNotShortedException e) {
-			newSurl = service.insert(newShortUrlDTO.ToObject());
-		}
+		ShortUrl newSurl = service.insert(newShortUrlDTO);
 		URI uri = ServletUriComponentsBuilder.fromPath(service.getPrefix()).path("/{uid}").buildAndExpand(newSurl.getUid())
 				.toUri();
-		return ResponseEntity.created(uri).body(newSurl); // uncertain if this sintax works. can crash.
+		return ResponseEntity.created(uri).body(new ShortUrlDTO(newSurl)); // uncertain if this sintax works. can crash.
 	}
 	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.GET)

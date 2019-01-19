@@ -31,14 +31,8 @@ public class StatisticsResource {
 	public ResponseEntity<?> insert(@RequestBody NewShortUrlDTO newShortUrlDTO) {
 		ShortUrl newSurl;
 		Boolean created = false;
-		
-		try {
-			newSurl = service.findByUrl(newShortUrlDTO.getUrl());
-		} catch (UrlNotShortedException e) {
-			created = true;
-			newSurl = service.insert(newShortUrlDTO.ToObject());
-		}
-		
+		//newSurl = service.insert(newShortUrlDTO.fromDTO());
+		newSurl = new ShortUrl();
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newSurl.getUid())
 				.toUri();
 		
