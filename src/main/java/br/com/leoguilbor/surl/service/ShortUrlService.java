@@ -79,11 +79,7 @@ public class ShortUrlService {
 	}
 
 	public String getPrefix() {
-		// TODO Auto-generated method stub
-		if (params.getSECURE()) {
-			return "https://"+this.params.getPREFIX();	
-		}
-		return "http://"+this.params.getPREFIX();
+		return this.params.getPrefix();
 	}
 
 }

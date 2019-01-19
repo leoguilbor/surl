@@ -24,25 +24,23 @@ import br.com.leoguilbor.surl.service.ShortUrlService;
 @RestController
 @RequestMapping(value = "/shortUrls")
 public class ShortUrlResource {
+	
 	@Autowired
 	private ShortUrlService service;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> insert(@RequestBody NewShortUrlDTO newShortUrlDTO) {
 		ShortUrl newSurl;
-
 		try {
 			newSurl = service.findByUrl(newShortUrlDTO.getUrl());
 		} catch (UrlNotShortedException e) {
 			newSurl = service.insert(newShortUrlDTO.ToObject());
 		}
-
 		URI uri = ServletUriComponentsBuilder.fromPath(service.getPrefix()).path("/{uid}").buildAndExpand(newSurl.getUid())
 				.toUri();
-
 		return ResponseEntity.created(uri).body(newSurl); // uncertain if this sintax works. can crash.
 	}
-
+	
 	@RequestMapping(value = "/{uid}", method = RequestMethod.GET)
 	public ResponseEntity<ShortUrl> findOne(@PathVariable String uid) {
 		// security token validation
@@ -63,7 +61,6 @@ public class ShortUrlResource {
 		// security token validation
 		ShortUrl newShortUrl = service.update(shortUrl);
 		return ResponseEntity.noContent().build();
-
 	}
 
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
