@@ -18,7 +18,7 @@ public class AppConfigParameter {
 	private Boolean SECURE;
 
 	public AppConfigParameter() {
-		// TODO Auto-generated construc
+
 	}
 
 	public int getUID_LENGTH() {

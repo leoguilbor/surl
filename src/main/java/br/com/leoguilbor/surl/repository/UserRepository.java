@@ -11,5 +11,6 @@ import br.com.leoguilbor.surl.domain.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 
 	Optional<User> findByLogin(String login);
+	Boolean existsByLogin(String login);
 
 }

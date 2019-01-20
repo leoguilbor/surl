@@ -36,7 +36,7 @@ import org.springframework.stereotype.Repository;
 @Table(name="short_url")
 public class ShortUrl implements Serializable{
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
     private String url;
     private String uid;

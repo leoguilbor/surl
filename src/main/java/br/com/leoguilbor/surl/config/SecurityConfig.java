@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 
 	private static final String[] PUBLIC_MATCHERS = { "/h2/**" };
-	private static final String[] PUBLIC_GET_MATCHERS = { "/**" };
+	private static final String[] PUBLIC_GET_MATCHERS = { "/**","/users" };
 	private static final String[] PUBLIC_POST_MATCHERS = { "/shortUrls" };
 	private static final String[] PRIVATE_GET_MATCHERS = { "/shortUrls" };
 
