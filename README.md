@@ -45,6 +45,11 @@ URL Shortener
 ### Statistics
 
 	GET    /stats/       - {} 
+	GET    /stats/{uid}			-	Number of ever shorted and forwarded urls 
+	GET    /stats/				-	Number of shorted and forwarded urls for a specific URL
+	GET    /stats/today			-	Number of shorted and forwarded urls today
+	GET    /stats/domain/			-	Number of shorted and forwarded urls by domain
+	GET    /stats/domain/{domain}		-	Number of shorted and forwarded urls in a specific domain
 
 ## Starting with Docker
 	Pull this git repository
