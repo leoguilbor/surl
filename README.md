@@ -1,5 +1,7 @@
 # SURL
 URL Shortener
+User: admin
+password: 123deoliveira4
 
 ## Public EndPoints
 
